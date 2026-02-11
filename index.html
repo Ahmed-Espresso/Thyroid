@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏥 نظام تشخيص الغدة الدرقية الذكي</title>
+    
+    <!-- روابط CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏥</text></svg>">
+    
+    <style>
+        /* أنماط التحميل السريع */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .simple-preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #6c63ff 0%, #36d1dc 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .preloader-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .preloader-logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .preloader-text {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .progress-bar {
+            width: 300px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: white;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        /* إخفاء المحتوى أثناء التحميل */
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .main-content.loaded {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader بسيط -->
+    <div class="simple-preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                🧠
+            </div>
+            <h2 class="preloader-text">جاري تحميل النظام الطبي الذكي</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p id="loadingMessage" style="margin-top: 1rem; color: rgba(255,255,255,0.8);">
+                تهيئة النظام الأساسي...
+            </p>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content" id="mainContent">
+        <!-- شريط التنقل -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>تشخيص<span>الدرقية</span></h1>
+                        <p>نظام ذكي متكامل</p>
+                    </div>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link active"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="#diagnose" class="nav-link"><i class="fas fa-stethoscope"></i> التشخيص</a></li>
+                    <li><a href="#reports" class="nav-link"><i class="fas fa-file-medical"></i> التقارير</a></li>
+                    <li><a href="#about" class="nav-link"><i class="fas fa-info-circle"></i> عن النظام</a></li>
+                </ul>
+                
+                <div class="nav-tools">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="help-btn" onclick="showHelp()">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                </div>
+                
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- القسم الرئيسي -->
+        <main>
+            <!-- قسم الهيرو -->
+            <section id="home" class="hero-section">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="gradient-text">
+                            تشخيص <span class="typing-text">الغدة الدرقية</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            نظام ذكي متكامل يستخدم الذكاء الاصطناعي لتحليل صور الأشعة 
+                            والتحاليل المخبرية بدقة تصل إلى <span class="highlight">94%</span>
+                        </p>
+                        
+                        <div class="hero-stats">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>+10,000</h3>
+                                    <p>تشخيص ذكي</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>30 ثانية</h3>
+                                    <p>نتائج فورية</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>100%</h3>
+                                    <p>أمان بيانات</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-actions">
+                            <a href="#diagnose" class="cta-btn primary-btn">
+                                <i class="fas fa-play-circle"></i>
+                                <span>ابدأ التشخيص الآن</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-visual">
+                        <div class="ai-visual">
+                            <div class="brain-animation">
+                                <div class="neuron"></div>
+                                <div class="neuron"></div>
+                                <div class="neuron"></div>
+                            </div>
+                            <div class="visual-text">تحليل ذكي مباشر</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- قسم التشخيص -->
+            <section id="diagnose" class="diagnose-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-user-md"></i>
+                        <span>التشخيص الذكي</span>
+                    </h2>
+                    <p class="section-subtitle">
+                        أدخل بيانات المريض ورفع الصور للحصول على تشخيص دقيق خلال ثوانٍ
+                    </p>
+                </div>
+
+                <div class="diagnose-form-container">
+                    <!-- البيانات الشخصية -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-user-injured"></i> المعلومات الشخصية</h3>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="patientName">
+                                    <i class="fas fa-user"></i>
+                                    اسم المريض
+                                </label>
+                                <input type="text" id="patientName" class="form-input" placeholder="أدخل الاسم ثلاثي" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="patientAge">
+                                    <i class="fas fa-birthday-cake"></i>
+                                    العمر
+                                </label>
+                                <input type="number" id="patientAge" class="form-input" min="1" max="120" placeholder="العمر بالسنوات" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="patientGender">
+                                    <i class="fas fa-venus-mars"></i>
+                                    الجنس
+                                </label>
+                                <select id="patientGender" class="form-select" required>
+                                    <option value="">اختر الجنس</option>
+                                    <option value="male">ذكر</option>
+                                    <option value="female">أنثى</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="patientPhone">
+                                    <i class="fas fa-phone-alt"></i>
+                                    رقم الهاتف
+                                </label>
+                                <input type="tel" id="patientPhone" class="form-input" placeholder="01X-XXXX-XXXX">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="medicalHistory">
+                                <i class="fas fa-file-medical-alt"></i>
+                                التاريخ المرضي
+                            </label>
+                            <textarea id="medicalHistory" class="form-textarea" rows="3" placeholder="أدخل الأمراض المزمنة والأدوية الحالية..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- قسم الصور -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-x-ray"></i> صور الأشعة</h3>
+                        
+                        <div class="upload-container">
+                            <div class="upload-zone" id="uploadZone">
+                                <div class="upload-content">
+                                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                    <h4>اسحب وأفلت الصور هنا</h4>
+                                    <p>أو انقر للاختيار من الجهاز</p>
+                                    <p class="upload-info">
+                                        <i class="fas fa-info-circle"></i>
+                                        يدعم الصور: JPG, PNG حتى 10MB
+                                    </p>
+                                    <button class="upload-btn" onclick="document.getElementById('imageUpload').click()">
+                                        <i class="fas fa-folder-open"></i>
+                                        اختر ملف
+                                    </button>
+                                </div>
+                                <input type="file" id="imageUpload" accept="image/*" hidden>
+                            </div>
+                            
+                            <div class="image-preview" id="imagePreview">
+                                <div class="preview-placeholder">
+                                    <i class="fas fa-image"></i>
+                                    <p>لم يتم رفع أي صورة بعد</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- قسم التحاليل -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-flask"></i> نتائج التحاليل</h3>
+                        
+                        <div class="lab-container">
+                            <div class="lab-card">
+                                <div class="lab-header">
+                                    <h4><i class="fas fa-vial"></i> TSH - هرمون الغدة</h4>
+                                    <div class="lab-range">
+                                        <span>طبيعي: 0.4 - 4.0 mIU/L</span>
+                                    </div>
+                                </div>
+                                <input type="number" id="tshLevel" class="lab-input" step="0.01" placeholder="أدخل قيمة TSH">
+                            </div>
+                            
+                            <div class="lab-card">
+                                <div class="lab-header">
+                                    <h4><i class="fas fa-vial"></i> T4 - الثيروكسين</h4>
+                                    <div class="lab-range">
+                                        <span>طبيعي: 4.5 - 11.2 μg/dL</span>
+                                    </div>
+                                </div>
+                                <input type="number" id="t4Level" class="lab-input" step="0.01" placeholder="أدخل قيمة T4">
+                            </div>
+                            
+                            <div class="lab-card">
+                                <div class="lab-header">
+                                    <h4><i class="fas fa-vial"></i> T3 - ثلاثي يودوثيرونين</h4>
+                                    <div class="lab-range">
+                                        <span>طبيعي: 80 - 200 ng/dL</span>
+                                    </div>
+                                </div>
+                                <input type="number" id="t3Level" class="lab-input" step="0.01" placeholder="أدخل قيمة T3">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- قسم الأعراض -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-comment-medical"></i> الأعراض الظاهرة</h3>
+                        
+                        <div class="symptoms-container">
+                            <div class="symptoms-grid">
+                                <label class="symptom-checkbox">
+                                    <input type="checkbox" name="symptoms" value="تعب">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="symptom-text">
+                                        <i class="fas fa-tired"></i>
+                                        التعب والإرهاق
+                                    </span>
+                                </label>
+                                
+                                <label class="symptom-checkbox">
+                                    <input type="checkbox" name="symptoms" value="وزن">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="symptom-text">
+                                        <i class="fas fa-weight"></i>
+                                        تغير غير مبرر في الوزن
+                                    </span>
+                                </label>
+                                
+                                <label class="symptom-checkbox">
+                                    <input type="checkbox" name="symptoms" value="حرارة">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="symptom-text">
+                                        <i class="fas fa-thermometer-half"></i>
+                                        حساسية للحرارة أو البرودة
+                                    </span>
+                                </label>
+                                
+                                <label class="symptom-checkbox">
+                                    <input type="checkbox" name="symptoms" value="نبض">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="symptom-text">
+                                        <i class="fas fa-heartbeat"></i>
+                                        سرعة أو بطء ضربات القلب
+                                    </span>
+                                </label>
+                                
+                                <label class="symptom-checkbox">
+                                    <input type="checkbox" name="symptoms" value="مزاج">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="symptom-text">
+                                        <i class="fas fa-smile-beam"></i>
+                                        تغيرات مزاجية
+                                    </span>
+                                </label>
+                                
+                                <label class="symptom-checkbox">
+                                    <input type="checkbox" name="symptoms" value="تورم">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="symptom-text">
+                                        <i class="fas fa-swelling"></i>
+                                        تورم في الرقبة
+                                    </span>
+                                </label>
+                            </div>
+                            
+                            <div class="symptoms-counter">
+                                <i class="fas fa-list-check"></i>
+                                <span>تم اختيار <strong id="symptomsCount">0</strong> أعراض</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- زر التشخيص -->
+                    <div class="form-actions">
+                        <button class="btn analyze-btn" onclick="startDiagnosis()">
+                            <i class="fas fa-brain"></i>
+                            <span>بدء التشخيص الذكي</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- شاشة تحميل AI -->
+                <div class="ai-loading" id="aiLoading">
+                    <div class="ai-loader">
+                        <div class="ai-brain">
+                            <div class="neuron"></div>
+                            <div class="neuron"></div>
+                            <div class="neuron"></div>
+                        </div>
+                        <div class="loading-text" id="loadingText">جاري تحليل البيانات...</div>
+                        <div class="loading-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="aiProgress"></div>
+                            </div>
+                            <div class="progress-text" id="progressText">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- قسم النتائج -->
+            <section id="results" class="results-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>نتائج التشخيص</span>
+                    </h2>
+                    <p class="section-subtitle">
+                        تم تحليل البيانات بنجاح. هذه هي النتائج والتوصيات الطبية
+                    </p>
+                </div>
+
+                <div class="results-container">
+                    <!-- معلومات المريض -->
+                    <div class="patient-card">
+                        <div class="patient-header">
+                            <div class="patient-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="patient-info">
+                                <h3 id="resultPatientName">محمد أحمد</h3>
+                                <div class="patient-meta">
+                                    <span class="meta-item">
+                                        <i class="fas fa-birthday-cake"></i>
+                                        <span id="resultAge">32 سنة</span>
+                                    </span>
+                                    <span class="meta-item">
+                                        <i class="fas fa-venus-mars"></i>
+                                        <span id="resultGender">ذكر</span>
+                                    </span>
+                                    <span class="meta-item">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span id="resultDate">12 نوفمبر 2023</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="report-id">
+                                <span>رقم التقرير:</span>
+                                <strong id="reportNumber">THY-230112-001</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- التشخيص -->
+                    <div class="diagnosis-card">
+                        <div class="diagnosis-header">
+                            <h3><i class="fas fa-diagnoses"></i> التشخيص النهائي</h3>
+                            <div class="severity-badge" id="severityBadge">
+                                <span>متوسط الخطورة</span>
+                            </div>
+                        </div>
+                        
+                        <div class="diagnosis-content">
+                            <h4 id="finalDiagnosis">وظيفة طبيعية للغدة الدرقية</h4>
+                            <p id="diagnosisDescription">الغدة تعمل بشكل طبيعي ولا تظهر عليها أي مشاكل أو تشوهات</p>
+                            
+                            <div class="confidence-meter">
+                                <div class="meter-header">
+                                    <span>دقة التحليل</span>
+                                    <span id="confidenceValue">85%</span>
+                                </div>
+                                <div class="meter-bar">
+                                    <div class="meter-fill" id="confidenceFill" style="width: 85%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- التوصيات -->
+                    <div class="recommendations-card">
+                        <div class="recommendations-header">
+                            <h3><i class="fas fa-stethoscope"></i> التوصيات الطبية</h3>
+                        </div>
+                        
+                        <div class="recommendations-list" id="recommendationsList">
+                            <!-- سيتم ملؤها ديناميكياً -->
+                        </div>
+                    </div>
+
+                    <!-- الأدوية -->
+                    <div class="medications-card">
+                        <div class="medications-header">
+                            <h3><i class="fas fa-pills"></i> الاقتراحات الدوائية</h3>
+                        </div>
+                        
+                        <div class="medications-content" id="medicationsContent">
+                            <!-- سيتم ملؤها ديناميكياً -->
+                        </div>
+                    </div>
+
+                    <!-- أزرار الإجراءات -->
+                    <div class="results-actions">
+                        <button class="action-btn print-btn" onclick="printReport()">
+                            <i class="fas fa-print"></i>
+                            <span>طباعة التقرير</span>
+                        </button>
+                        
+                        <button class="action-btn save-btn" onclick="saveReport()">
+                            <i class="fas fa-save"></i>
+                            <span>حفظ التقرير</span>
+                        </button>
+                        
+                        <button class="action-btn new-btn" onclick="newDiagnosis()">
+                            <i class="fas fa-plus"></i>
+                            <span>تشخيص جديد</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- قسم التقارير -->
+            <section id="reports" class="reports-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-archive"></i>
+                        <span>الأرشيف</span>
+                    </h2>
+                    <p class="section-subtitle">
+                        جميع التشخيصات والتقارير السابقة
+                    </p>
+                </div>
+
+                <div class="reports-container">
+                    <!-- إحصائيات -->
+                    <div class="reports-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-folder-open"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3 id="totalReports">0</h3>
+                                <p>إجمالي التشخيصات</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3 id="normalReports">0</h3>
+                                <p>حالات سليمة</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3 id="warningReports">0</h3>
+                                <p>تحت المراقبة</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3 id="criticalReports">0</h3>
+                                <p>حالات حرجة</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- جدول التقارير -->
+                    <div class="reports-table-container">
+                        <div class="table-tools">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="searchReports" placeholder="ابحث باسم المريض أو التاريخ...">
+                            </div>
+                        </div>
+                        
+                        <div class="table-wrapper">
+                            <table class="reports-table">
+                                <thead>
+                                    <tr>
+                                        <th>اسم المريض</th>
+                                        <th>التاريخ</th>
+                                        <th>التشخيص</th>
+                                        <th>الدقة</th>
+                                        <th>الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reportsTableBody">
+                                    <!-- سيتم ملؤها ديناميكياً -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- حالة عدم وجود بيانات -->
+                        <div class="empty-state" id="emptyReports">
+                            <div class="empty-icon">
+                                <i class="fas fa-folder-open"></i>
+                            </div>
+                            <h3>لا توجد تقارير بعد</h3>
+                            <p>ابدأ بتشخيص جديد لملء الأرشيف</p>
+                            <button class="empty-action" onclick="scrollToDiagnose()">
+                                <i class="fas fa-plus"></i>
+                                تشخيص جديد
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- عن النظام -->
+            <section id="about" class="about-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-cogs"></i>
+                        <span>عن النظام</span>
+                    </h2>
+                    <p class="section-subtitle">
+                        تعرف على كيفية عمل النظام والتقنيات المستخدمة
+                    </p>
+                </div>
+
+                <div class="about-container">
+                    <div class="about-card">
+                        <h3><i class="fas fa-play-circle"></i> كيف يعمل النظام؟</h3>
+                        <p>
+                            النظام يستخدم خوارزميات ذكية لتحليل بيانات المريض والصور الطبية، 
+                            مع تطبيق القواعد الطبية المعتمدة عالمياً لتشخيص أمراض الغدة الدرقية.
+                        </p>
+                    </div>
+                    
+                    <div class="about-card">
+                        <h3><i class="fas fa-shield-alt"></i> خصوصية البيانات</h3>
+                        <p>
+                            جميع البيانات تخزن محلياً على جهازك ولا يتم إرسالها لأي خادم خارجي، 
+                            مما يضمن خصوصية وأمان معلومات المرضى.
+                        </p>
+                    </div>
+                    
+                    <div class="about-card">
+                        <h3><i class="fas fa-exclamation-triangle"></i> إخلاء المسؤولية</h3>
+                        <p>
+                            هذا النظام يقدم تشخيصاً أولياً للمساعدة ولا يغني عن استشارة الطبيب المتخصص. 
+                            يجب مراجعة الطبيب للتأكد من التشخيص والعلاج المناسب.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- الفوتر -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-brain"></i>
+                        <div class="footer-text">
+                            <h3>تشخيص الدرقية الذكي</h3>
+                            <p>مشروع تخرج 2026</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">
+                        نظام متكامل لتشخيص أمراض الغدة الدرقية باستخدام الذكاء الاصطناعي
+                    </p>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>© 2026 نظام تشخيص الغدة الدرقية الذكي. جميع الحقوق محفوظة.</p>
+                    <p>هذا النظام لأغراض تعليمية وبحثية</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- الاشعارات -->
+    <div class="notifications-container" id="notificationsContainer"></div>
+
+    <!-- مكتبات JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- ملفات النظام -->
+    <script src="app.js"></script>
+    
+    <!-- بدء التشغيل -->
+    <script>
+        // بدء التحميل السريع
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 بدء تشغيل النظام...');
+            
+            // محاكاة تقدم التحميل
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 10;
+                document.getElementById('progressFill').style.width = progress + '%';
+                
+                if (progress >= 30) {
+                    document.getElementById('loadingMessage').textContent = 'جاري تحميل الواجهة...';
+                }
+                if (progress >= 60) {
+                    document.getElementById('loadingMessage').textContent = 'جاري تهيئة النظام الطبي...';
+                }
+                if (progress >= 90) {
+                    document.getElementById('loadingMessage').textContent = 'جاري تحميل البيانات...';
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    
+                    // إخفاء preloader وإظهار المحتوى
+                    setTimeout(() => {
+                        const preloader = document.getElementById('preloader');
+                        preloader.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            preloader.style.display = 'none';
+                            document.getElementById('mainContent').classList.add('loaded');
+                            console.log('✅ النظام جاهز للاستخدام');
+                            
+                            // تهيئة النظام
+                            initializeSystem();
+                        }, 500);
+                    }, 500);
+                }
+            }, 100);
+        });
+        
+        // تهيئة النظام بعد التحميل
+        function initializeSystem() {
+            // إعداد الأحداث
+            setupEventListeners();
+            
+            // تحديث التقارير
+            updateReportsTable();
+            updateStats();
+            
+            // تمكين جميع الوظائف
+            window.startDiagnosis = startDiagnosis;
+            window.printReport = printReport;
+            window.saveReport = saveReport;
+            window.newDiagnosis = newDiagnosis;
+            window.scrollToDiagnose = function() {
+                document.querySelector('#diagnose').scrollIntoView({ behavior: 'smooth' });
+            };
+            
+            // إظهار رسالة الترحيب
+            setTimeout(() => {
+                showNotification('مرحباً بك في نظام تشخيص الغدة الدرقية الذكي', 'success');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
