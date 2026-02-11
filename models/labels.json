@@ -1,0 +1,141 @@
+{
+  "system_name": "نظام تشخيص الغدة الدرقية الذكي",
+  "version": "2.0.0",
+  "author": "فريق مشروع التخرج",
+  "description": "نظام ذكي لتشخيص أمراض الغدة الدرقية باستخدام الذكاء الاصطناعي",
+  
+  "diagnosis_categories": [
+    {
+      "id": "normal",
+      "name": "وظيفة طبيعية للغدة الدرقية",
+      "description": "الغدة تعمل بشكل طبيعي ولا تظهر عليها أي مشاكل",
+      "severity": "low",
+      "color": "#00b894"
+    },
+    {
+      "id": "hypothyroidism",
+      "name": "قصور الغدة الدرقية",
+      "description": "انخفاض في إنتاج هرمونات الغدة الدرقية",
+      "severity": "medium",
+      "color": "#fdcb6e"
+    },
+    {
+      "id": "hyperthyroidism",
+      "name": "فرط نشاط الغدة الدرقية",
+      "description": "زيادة في إنتاج هرمونات الغدة الدرقية",
+      "severity": "high",
+      "color": "#e17055"
+    },
+    {
+      "id": "goiter",
+      "name": "تضخم الغدة الدرقية",
+      "description": "زيادة في حجم الغدة الدرقية",
+      "severity": "medium",
+      "color": "#6c5ce7"
+    }
+  ],
+  
+  "lab_tests": [
+    {
+      "name": "TSH",
+      "normal_range": "0.4 - 4.0",
+      "unit": "mIU/L",
+      "importance": "high"
+    },
+    {
+      "name": "T4",
+      "normal_range": "4.5 - 11.2",
+      "unit": "μg/dL",
+      "importance": "medium"
+    },
+    {
+      "name": "T3",
+      "normal_range": "80 - 200",
+      "unit": "ng/dL",
+      "importance": "medium"
+    }
+  ],
+  
+  "symptoms": [
+    {
+      "id": "fatigue",
+      "name": "التعب والإرهاق",
+      "related_conditions": ["hypothyroidism", "hyperthyroidism"]
+    },
+    {
+      "id": "weight_change",
+      "name": "تغير غير مبرر في الوزن",
+      "related_conditions": ["hypothyroidism", "hyperthyroidism"]
+    },
+    {
+      "id": "temperature_sensitivity",
+      "name": "حساسية للحرارة أو البرودة",
+      "related_conditions": ["hypothyroidism", "hyperthyroidism"]
+    },
+    {
+      "id": "heart_rate",
+      "name": "سرعة أو بطء ضربات القلب",
+      "related_conditions": ["hyperthyroidism"]
+    },
+    {
+      "id": "mood_changes",
+      "name": "تغيرات مزاجية",
+      "related_conditions": ["hypothyroidism", "hyperthyroidism"]
+    },
+    {
+      "id": "neck_swelling",
+      "name": "تورم في الرقبة",
+      "related_conditions": ["goiter"]
+    }
+  ],
+  
+  "medications": {
+    "hypothyroidism": {
+      "name": "ليفوثيروكسين",
+      "dosage": "50-100 ميكروجرام/يوم",
+      "notes": "يبدأ بجرعة منخفضة وتزداد تدريجياً"
+    },
+    "hyperthyroidism": {
+      "name": "ميثيمازول",
+      "dosage": "10-40 مجم/يوم",
+      "notes": "يحتاج مراقبة وظائف الكبد"
+    },
+    "goiter": {
+      "name": "ليفوثيروكسين",
+      "dosage": "متفاوت حسب الحالة",
+      "notes": "يستخدم فقط إذا كان القصور هو السبب"
+    }
+  },
+  
+  "follow_up_plans": {
+    "normal": "مراجعة سنوية",
+    "hypothyroidism": "مراجعة كل 6-8 أسابيع حتى الاستقرار، ثم كل 6-12 شهر",
+    "hyperthyroidism": "مراجعة أسبوعية في البداية، ثم كل 2-4 أسابيع",
+    "goiter": "مراجعة كل 3-6 أشهر"
+  },
+  
+  "risk_factors": [
+    "العمر فوق 40 سنة",
+    "الجنس الأنثوي",
+    "التاريخ العائلي",
+    "أمراض المناعة الذاتية",
+    "التعرض للإشعاع",
+    "نقص اليود"
+  ],
+  
+  "preventive_measures": [
+    "تناول غذاء متوازن غني باليود",
+    "الفحص الدوري بعد عمر 35 سنة",
+    "مراقبة أعراض الغدة الدرقية",
+    "تجنب التدخين",
+    "إدارة التوتر النفسي"
+  ],
+  
+  "disclaimer": "هذا النظام يقدم تشخيصاً أولياً للمساعدة فقط ولا يغني عن استشارة الطبيب المتخصص. جميع المعلومات المقدمة لأغراض تعليمية وبحثية.",
+  
+  "contact_info": {
+    "email": "support@thyroid-diagnosis.com",
+    "phone": "+20 100 123 4567",
+    "website": "www.thyroid-diagnosis.com"
+  }
+}

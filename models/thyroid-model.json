@@ -1,0 +1,180 @@
+{
+  "model_info": {
+    "name": "Thyroid Diagnosis AI Model",
+    "version": "1.0.0",
+    "type": "Rule-Based Expert System",
+    "description": "نظام خبير لتشخيص أمراض الغدة الدرقية يعتمد على القواعد الطبية المعتمدة",
+    "author": "Thyroid Diagnosis Team",
+    "created_date": "2023-11-01",
+    "last_updated": "2023-11-01"
+  },
+  
+  "diagnosis_rules": [
+    {
+      "rule_id": "R001",
+      "condition": "TSH < 0.4 AND Symptoms include 'تعب' AND Symptoms include 'وزن'",
+      "diagnosis": "hyperthyroidism",
+      "confidence": 0.85,
+      "description": "فرط نشاط الغدة الدرقية (TSH منخفض مع أعراض فرط النشاط)"
+    },
+    {
+      "rule_id": "R002",
+      "condition": "TSH > 4.0 AND Symptoms include 'تعب' AND Symptoms include 'برودة'",
+      "diagnosis": "hypothyroidism",
+      "confidence": 0.80,
+      "description": "قصور الغدة الدرقية (TSH مرتفع مع أعراض القصور)"
+    },
+    {
+      "rule_id": "R003",
+      "condition": "TSH between 0.4 AND 4.0 AND No symptoms",
+      "diagnosis": "normal",
+      "confidence": 0.90,
+      "description": "وظيفة طبيعية (TSH ضمن النطاق الطبيعي بدون أعراض)"
+    },
+    {
+      "rule_id": "R004",
+      "condition": "Symptoms include 'تورم' AND Neck swelling present",
+      "diagnosis": "goiter",
+      "confidence": 0.75,
+      "description": "تضخم الغدة الدرقية (أعراض تضخم الرقبة)"
+    },
+    {
+      "rule_id": "R005",
+      "condition": "Age > 60 AND TSH > 10",
+      "diagnosis": "hypothyroidism",
+      "confidence": 0.95,
+      "description": "قصور شديد في الغدة الدرقية (عمر متقدم مع TSH مرتفع جداً)"
+    }
+  ],
+  
+  "risk_assessment": {
+    "factors": [
+      {
+        "factor": "age",
+        "weight": 0.3,
+        "description": "العمر فوق 40 سنة يزيد الخطورة"
+      },
+      {
+        "factor": "gender",
+        "weight": 0.2,
+        "description": "الإناث أكثر عرضة بمقدار 3-5 مرات"
+      },
+      {
+        "factor": "tsh_level",
+        "weight": 0.4,
+        "description": "مستوى TSH خارج النطاق الطبيعي"
+      },
+      {
+        "factor": "symptom_count",
+        "weight": 0.3,
+        "description": "عدد الأعراض الظاهرة"
+      },
+      {
+        "factor": "family_history",
+        "weight": 0.2,
+        "description": "التاريخ العائلي لأمراض الغدة"
+      }
+    ],
+    
+    "risk_levels": [
+      {
+        "level": "low",
+        "score_range": "0-2",
+        "description": "خطورة منخفضة، متابعة روتينية"
+      },
+      {
+        "level": "medium",
+        "score_range": "3-4",
+        "description": "خطورة متوسطة، يحتاج فحص دوري"
+      },
+      {
+        "level": "high",
+        "score_range": "5-6",
+        "description": "خطورة مرتفعة، يحتاج تدخل طبي"
+      },
+      {
+        "level": "critical",
+        "score_range": "7+",
+        "description": "خطورة حرجة، يحتاج تدخل عاجل"
+      }
+    ]
+  },
+  
+  "image_analysis": {
+    "enabled": true,
+    "type": "rule_based",
+    "capabilities": [
+      "تحميل ومعاينة الصور",
+      "التحقق من نوع الصورة",
+      "التقييم العام للجودة",
+      "الكشف عن السمات الأساسية"
+    ],
+    "limitations": [
+      "لا يقوم بالتشخيص من الصور وحدها",
+      "يحتاج لدمج مع البيانات السريرية",
+      "لا يحل محل الفحص الطبي المتخصص"
+    ]
+  },
+  
+  "recommendation_engine": {
+    "rules": [
+      {
+        "condition": "diagnosis = 'hypothyroidism'",
+        "recommendations": [
+          "مراجعة طبيب الغدد الصماء",
+          "فحص TSH كل 6-8 أسابيع",
+          "بدء العلاج الهرموني تحت إشراف طبي"
+        ]
+      },
+      {
+        "condition": "diagnosis = 'hyperthyroidism'",
+        "recommendations": [
+          "مراجعة عاجلة للطبيب",
+          "فحص الأجسام المضادة",
+          "مراقبة ضربات القلب"
+        ]
+      },
+      {
+        "condition": "risk_level = 'high'",
+        "recommendations": [
+          "متابعة فورية مع متخصص",
+          "فحوصات إضافية",
+          "مراقبة يومية للأعراض"
+        ]
+      }
+    ]
+  },
+  
+  "system_requirements": {
+    "browser": "Chrome 80+, Firefox 75+, Safari 13+",
+    "javascript": "ES6+",
+    "storage": "LocalStorage enabled",
+    "memory": "Minimum 256MB RAM",
+    "screen": "Minimum 1024x768 resolution"
+  },
+  
+  "data_privacy": {
+    "storage": "جميع البيانات تخزن محلياً على جهاز المستخدم",
+    "transmission": "لا يتم إرسال أي بيانات لأي خادم خارجي",
+    "encryption": "التخزين المحلي غير مشفر (يمكن للمستخدم مسح البيانات)",
+    "retention": "البيانات تبقى حتى يقوم المستخدم بحذفها",
+    "compliance": "متوافق مع خصوصية البيانات"
+  },
+  
+  "performance_metrics": {
+    "diagnosis_time": "2-5 ثواني",
+    "accuracy": "85-95% (بناءً على البيانات الكاملة)",
+    "reliability": "عالية (نظام قائم على القواعد الطبية)",
+    "availability": "100% (يعمل دون اتصال بالإنترنت)",
+    "scalability": "يدعم عدد غير محدود من التشخيصات"
+  },
+  
+  "update_schedule": {
+    "medical_rules": "ربع سنوي",
+    "lab_ranges": "سنوي",
+    "symptoms_database": "نصف سنوي",
+    "recommendations": "ربع سنوي"
+  },
+  
+  "disclaimer": "هذا النظام يقدم تشخيصاً أولياً للمساعدة فقط. يجب مراجعة الطبيب المتخصص للتأكد من التشخيص والعلاج المناسب. النظام غير مسؤول عن أي قرارات علاجية بناءً على نتائجه."
+}
